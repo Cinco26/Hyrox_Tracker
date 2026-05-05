@@ -7,60 +7,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black: #080808;
-  --dark: #101010;
-  --card: #141414;
-  --border: #252525;
-  --border2: #2e2e2e;
-  --yellow: #f5c518;
-  --green: #2ecc71;
-  --green-dim: rgba(46,204,113,0.10);
-  --red: #c0392b;
-  --muted: #444;
-  --soft: #777;
-  --text: #ccc;
-  --white: #f0f0f0;
-  --phase-build: #3498db;
-  --phase-intensity: #e67e22;
-  --phase-peak: #e74c3c;
-  --phase-taper: #2ecc71;
+  --black: #080808; --dark: #101010; --card: #141414;
+  --border: #252525; --border2: #2e2e2e;
+  --yellow: #f5c518; --green: #2ecc71; --green-dim: rgba(46,204,113,0.10);
+  --red: #c0392b; --muted: #444; --soft: #777; --text: #ccc; --white: #f0f0f0;
+  --phase-build: #3498db; --phase-intensity: #e67e22;
+  --phase-peak: #e74c3c; --phase-taper: #2ecc71;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background: var(--black); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; min-height: 100vh; }
 
-header {
-  background: var(--dark); border-bottom: 2px solid var(--yellow);
-  padding: 18px 18px 12px; position: sticky; top: 0; z-index: 200;
-}
+header { background: var(--dark); border-bottom: 2px solid var(--yellow); padding: 18px 18px 12px; position: sticky; top: 0; z-index: 200; }
 h1 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: var(--yellow); line-height: 1; }
 .header-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-.pill {
-  background: #1c1c1c; border: 1px solid var(--border2); border-radius: 3px;
-  padding: 3px 8px; font-family: 'DM Mono', monospace; font-size: 10px;
-  color: var(--soft); letter-spacing: 1px; text-transform: uppercase;
-}
+.pill { background: #1c1c1c; border: 1px solid var(--border2); border-radius: 3px; padding: 3px 8px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--soft); letter-spacing: 1px; text-transform: uppercase; }
 .pill b { color: var(--yellow); font-weight: 500; }
 
+/* SYNC STATUS BAR */
+.sync-bar { background: #0a0a0a; border-bottom: 1px solid var(--border); padding: 6px 18px; display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; }
+.sync-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex-shrink: 0; transition: background 0.3s; }
+.sync-dot.syncing { background: var(--yellow); animation: pulse 1s infinite; }
+.sync-dot.ok { background: var(--green); }
+.sync-dot.error { background: var(--red); }
+.sync-label { color: var(--soft); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
 .progress-section { background: var(--dark); border-bottom: 1px solid var(--border); padding: 10px 18px; }
-.progress-label {
-  display: flex; justify-content: space-between; margin-bottom: 5px;
-  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--soft);
-  letter-spacing: 1px; text-transform: uppercase;
-}
+.progress-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--soft); letter-spacing: 1px; text-transform: uppercase; }
 .progress-label b { color: var(--yellow); }
 .progress-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--yellow); border-radius: 3px; transition: width 0.5s ease; }
 
-.phase-tabs {
-  display: flex; background: var(--dark); border-bottom: 1px solid var(--border); overflow-x: auto;
-}
-.phase-tab {
-  padding: 9px 14px; font-size: 10px; font-family: 'DM Mono', monospace;
-  letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
-  cursor: pointer; border: none; background: none;
-  border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s;
-}
+.phase-tabs { display: flex; background: var(--dark); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.phase-tab { padding: 9px 14px; font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; }
 .phase-tab:hover { color: var(--text); }
 .phase-tab.active { color: var(--white); border-bottom-color: var(--yellow); }
 .phase-tab .dot { display: inline-block; width: 7px; height: 7px; border-radius: 1px; margin-right: 5px; vertical-align: middle; }
@@ -68,10 +48,7 @@ h1 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px
 .main { padding: 14px; max-width: 860px; margin: 0 auto; }
 
 .week-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
-.week-header {
-  display: flex; align-items: center; gap: 10px; padding: 11px 14px;
-  cursor: pointer; border-bottom: 1px solid transparent; transition: background 0.15s;
-}
+.week-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; border-bottom: 1px solid transparent; transition: background 0.15s; }
 .week-header:hover { background: #1c1c1c; }
 .week-card.open .week-header { border-bottom-color: var(--border); }
 .phase-stripe { width: 4px; height: 38px; border-radius: 2px; flex-shrink: 0; }
@@ -87,110 +64,57 @@ h1 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px
 .week-body { display: none; }
 .week-card.open .week-body { display: block; }
 
-.coach-note {
-  margin: 10px 14px 4px; padding: 9px 12px;
-  background: #0e0e0e; border-left: 3px solid var(--yellow);
-  border-radius: 0 4px 4px 0; font-size: 11.5px; color: var(--soft);
-  font-style: italic; line-height: 1.6;
-}
+.coach-note { margin: 10px 14px 4px; padding: 9px 12px; background: #0e0e0e; border-left: 3px solid var(--yellow); border-radius: 0 4px 4px 0; font-size: 11.5px; color: var(--soft); font-style: italic; line-height: 1.6; }
 
-/* intent badge */
-.intent-badge {
-  display: inline-block; margin-top: 4px;
-  background: var(--yellow-dim, rgba(245,197,24,0.08));
-  border: 1px solid rgba(245,197,24,0.2);
-  border-radius: 3px; padding: 2px 8px;
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  color: var(--yellow); letter-spacing: 1px; text-transform: uppercase;
-}
-
-/* addon box */
-.addon-box {
-  margin-top: 6px; padding: 7px 10px;
-  background: #111; border-left: 2px solid var(--phase-build);
-  border-radius: 0 3px 3px 0; font-size: 11.5px; color: var(--soft); line-height: 1.5;
-}
+.intent-badge { display: inline-block; margin-top: 4px; border: 1px solid; border-radius: 3px; padding: 2px 8px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.addon-box { margin-top: 6px; padding: 7px 10px; background: #111; border-left: 2px solid; border-radius: 0 3px 3px 0; font-size: 11.5px; color: var(--soft); line-height: 1.5; }
 .addon-box strong { color: var(--white); font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 3px; }
 
-.day-row {
-  border-top: 1px solid #1c1c1c;
-  display: grid; grid-template-columns: 64px 1fr auto; min-height: 50px;
-}
+.day-row { border-top: 1px solid #1c1c1c; display: grid; grid-template-columns: 64px 1fr auto; min-height: 50px; }
 .day-row.no-action { grid-template-columns: 64px 1fr; }
-.day-label {
-  padding: 11px 12px; font-family: 'DM Mono', monospace; font-size: 10px;
-  color: var(--soft); letter-spacing: 1px; text-transform: uppercase;
-  border-right: 1px solid #1c1c1c; display: flex; align-items: flex-start; padding-top: 13px;
-}
+.day-label { padding: 11px 12px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--soft); letter-spacing: 1px; text-transform: uppercase; border-right: 1px solid #1c1c1c; display: flex; align-items: flex-start; padding-top: 13px; }
 .day-content { padding: 9px 12px; }
 .session-type { font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
 .session-detail { font-size: 12px; color: var(--text); line-height: 1.6; }
 .session-detail strong { color: var(--white); }
 .rest-label { color: var(--muted); font-size: 12px; font-style: italic; padding: 13px 0; }
 
-.day-actions { padding: 9px 12px; display: flex; align-items: flex-start; padding-top: 11px; }
-.btn-log {
-  background: none; border: 1px solid var(--border2); color: var(--soft);
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
-  text-transform: uppercase; padding: 5px 9px; border-radius: 3px;
-  cursor: pointer; white-space: nowrap; transition: all 0.15s;
-}
+.day-actions { padding: 9px 12px; display: flex; align-items: flex-start; padding-top: 11px; flex-direction: column; gap: 4px; }
+.btn-log { background: none; border: 1px solid var(--border2); color: var(--soft); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 5px 9px; border-radius: 3px; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
 .btn-log:hover { border-color: var(--yellow); color: var(--yellow); }
 .btn-log.logged { border-color: var(--green); color: var(--green); background: var(--green-dim); }
 
-.log-panel {
-  display: none; background: #0e0e0e; border-top: 1px solid var(--border);
-  padding: 13px 14px; grid-column: 1 / -1;
-}
+/* sync indicator on log button */
+.sync-indicator { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--soft); letter-spacing: 0.5px; }
+.sync-indicator.ok { color: var(--green); }
+.sync-indicator.error { color: var(--red); }
+
+.log-panel { display: none; background: #0e0e0e; border-top: 1px solid var(--border); padding: 13px 14px; grid-column: 1 / -1; }
 .log-panel.visible { display: block; }
-.log-panel h4 {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
-  text-transform: uppercase; color: var(--yellow); margin-bottom: 10px;
-}
+.log-panel h4 { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--yellow); margin-bottom: 10px; }
 .log-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-bottom: 10px; }
-.log-field label {
-  display: block; font-family: 'DM Mono', monospace; font-size: 10px;
-  color: var(--soft); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px;
-}
-.log-field input, .log-field select, .log-field textarea {
-  width: 100%; background: #161616; border: 1px solid var(--border2);
-  border-radius: 3px; color: var(--white); font-family: 'DM Mono', monospace;
-  font-size: 12px; padding: 6px 9px; outline: none; transition: border-color 0.15s;
-}
+.log-field label { display: block; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--soft); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+.log-field input, .log-field select, .log-field textarea { width: 100%; background: #161616; border: 1px solid var(--border2); border-radius: 3px; color: var(--white); font-family: 'DM Mono', monospace; font-size: 12px; padding: 6px 9px; outline: none; transition: border-color 0.15s; }
 .log-field input:focus, .log-field select:focus, .log-field textarea:focus { border-color: var(--yellow); }
 .log-field textarea { resize: vertical; min-height: 56px; }
 .log-field.wide { grid-column: 1/-1; }
 
 .splits-section { margin: 8px 0; }
-.splits-section label {
-  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--soft);
-  letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 6px;
-}
+.splits-section label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--soft); letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
 .splits-note { font-size: 11px; color: var(--muted); font-style: italic; margin-bottom: 6px; }
 .splits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; }
 .split-field label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.5px; display: block; margin-bottom: 2px; }
-.split-field input {
-  width: 100%; background: #161616; border: 1px solid var(--border2);
-  border-radius: 3px; color: var(--yellow); font-family: 'DM Mono', monospace;
-  font-size: 12px; padding: 5px 8px; outline: none; transition: border-color 0.15s;
-}
+.split-field input { width: 100%; background: #161616; border: 1px solid var(--border2); border-radius: 3px; color: var(--yellow); font-family: 'DM Mono', monospace; font-size: 12px; padding: 5px 8px; outline: none; transition: border-color 0.15s; }
 .split-field input:focus { border-color: var(--yellow); }
 
-.log-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.btn-save {
-  background: var(--yellow); color: var(--black); border: none; border-radius: 3px;
-  padding: 7px 16px; font-family: 'DM Mono', monospace; font-size: 11px;
-  letter-spacing: 1px; text-transform: uppercase; cursor: pointer; font-weight: 600; transition: opacity 0.15s;
-}
+.log-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+.btn-save { background: var(--yellow); color: var(--black); border: none; border-radius: 3px; padding: 7px 16px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; font-weight: 600; transition: opacity 0.15s; }
 .btn-save:hover { opacity: 0.85; }
-.btn-cancel {
-  background: none; border: 1px solid var(--border2); color: var(--soft);
-  border-radius: 3px; padding: 7px 12px; font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s;
-}
+.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-cancel { background: none; border: 1px solid var(--border2); color: var(--soft); border-radius: 3px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
 .btn-cancel:hover { border-color: var(--soft); color: var(--text); }
 .btn-delete { color: var(--red) !important; border-color: var(--red) !important; }
-.save-msg { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green); letter-spacing: 1px; display: none; }
+.save-status { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; }
 
 .logged-data { background: #111; border: 1px solid #1e1e1e; border-radius: 4px; padding: 9px 11px; margin-top: 7px; display: none; }
 .logged-data.visible { display: block; }
@@ -200,10 +124,11 @@ h1 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px
 .logged-splits { margin-top: 6px; padding-top: 6px; border-top: 1px solid #1c1c1c; }
 .logged-splits-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
 .logged-splits-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.logged-split { }
 .logged-split-station { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
 .logged-split-time { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--yellow); }
 .logged-notes { font-size: 11.5px; color: var(--soft); font-style: italic; border-top: 1px solid #1c1c1c; margin-top: 5px; padding-top: 5px; line-height: 1.5; }
+.logged-synced { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--green); margin-top: 4px; }
+.logged-sync-fail { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--red); margin-top: 4px; }
 .btn-edit-log { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; background: none; border: none; cursor: pointer; padding: 0; display: block; margin-top: 5px; }
 .btn-edit-log:hover { color: var(--yellow); }
 
@@ -237,8 +162,14 @@ footer { text-align: center; padding: 24px 18px; color: var(--muted); font-size:
     <div class="pill">Race <b>5 Jul 2026</b></div>
     <div class="pill">Venue <b>Sydney Showground</b></div>
     <div class="pill">Athlete <b>James</b></div>
+    <div class="pill">Sheets <b>Connected</b></div>
   </div>
 </header>
+
+<div class="sync-bar">
+  <div class="sync-dot" id="sync-dot"></div>
+  <span class="sync-label" id="sync-label">Ready — logs save locally and to Google Sheets</span>
+</div>
 
 <div class="progress-section">
   <div class="progress-label"><span>Overall Progress</span><b id="progress-pct">0%</b></div>
@@ -254,428 +185,276 @@ footer { text-align: center; padding: 24px 18px; color: var(--muted); font-size:
 </div>
 
 <div class="main" id="main-content"></div>
-
 <footer>HYROX SYDNEY 2026 — 9-WEEK PLAN — JAMES — TARGET SUB 90 MIN</footer>
 
 <script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz5RYdsezAtjqfwoY5M-zqgOlRp_aVv92N0hlnJ619Cx89pU62bGyVU94jUqyYsMSgHVw/exec';
+
 // ─── PHASE COLOURS ────────────────────────────────────────────────────────────
 const PC = { build:'var(--phase-build)', intensity:'var(--phase-intensity)', peak:'var(--phase-peak)', taper:'var(--phase-taper)' };
 
-// ─── SIM STATIONS (optional splits) ──────────────────────────────────────────
-const STATIONS = [
-  'SkiErg','Sled Push','Sled Pull','Burpee Jumps','Row','Farmers Carry','Bag Lunges','Wall Balls'
-];
+// ─── STATIONS ─────────────────────────────────────────────────────────────────
+const STATIONS = ['SkiErg','Sled Push','Sled Pull','Burpee Jumps','Row','Farmers Carry','Bag Lunges','Wall Balls'];
 
-// ─── WEEK DATA ────────────────────────────────────────────────────────────────
-// CFM days: show intent + effort level + post-session add-on only
-// Tuesday runs: progressively build to 70 min at peak
-// Saturday: ~60% sim (flexible splits) + separate post-break easy run
-const WEEKS = [
-{
-  id:'w1', num:'W1', phase:'build', phaseLabel:'BUILD PHASE',
-  dates:'4 May – 10 May', title:'Restructure & Load Management',
-  note:'First week of corrected structure. Same output as last week, smarter distribution. One genuine recovery day between your peak quality sessions. Tuesday HR dialled back to 140–148. No finisher work Friday.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT', effortNote:'Complete all programmed work. Lower body strength focus this week.',
-      addon:'None this week — let the session stand on its own.',
-      addonColor:'var(--phase-build)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Threshold Run',
-      title:'55 min @ controlled HR 140–148',
-      detail:'Hold pace steady from km 1. No surges. Aerobic base work. Target ~5:50–6:10/km.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'85% EFFORT', effortNote:'Buffer day. Complete all strength work. Dial conditioning intensity back slightly — this protects Thursday.',
-      addon:'None — preserve energy for Thursday intervals.',
-      addonColor:'var(--phase-build)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'4×4 Intervals',
-      title:'4 × 4 min hard / 3 min recovery',
-      detail:'Target HR 165–174 during work. Best pace ~4:00–4:20/km. VO2 max session — protected by Wednesday buffer.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'recovery',
-      sessionType:'Active Recovery',
-      title:'20–30 min walk or light mobility only',
-      detail:'No structured training. This day exists to make Saturday count.',
-      fields:['notes'] },
-    { id:'sat', label:'SAT', type:'sim',
-      sessionType:'CFM Sim (~60% race)',
-      title:'Sim session + post-break easy run',
-      detail:'Complete the CFM Saturday sim at race-day pacing discipline. After sport with your son (allow at least 1 hr break), complete an easy run.',
-      simNote:'~60% of race distance. Stations may vary week to week — log any splits you can, even if distances differ. Trend matters more than absolute times.',
-      runDetail:'Easy run: 30 min @ HR <135. Keep it genuinely easy — the break means legs will be recovered enough to run properly.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      runFields:['runDuration','runAvgHR','runNotes'],
-      hasSplits:true },
-  ]
-},
-{
-  id:'w2', num:'W2', phase:'build', phaseLabel:'BUILD PHASE',
-  dates:'11 May – 17 May', title:'Station Specificity + Run Volume Up',
-  note:'Same structure as Week 1. Tuesday run extends to 65 min. Intervals go to 5×4. Begin logging Saturday sim splits — even approximate ones. Wall balls, sled push, and farmers carry are your three highest time-risk stations.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT', effortNote:'Complete all programmed work. Focus on ski erg technique — efficiency over speed.',
-      addon:'Log your ski erg 1km split if it comes up in the session. This is your baseline.',
-      addonColor:'var(--phase-build)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Threshold Run',
-      title:'65 min @ HR 140–150',
-      detail:'Extended from Week 1. Same pace discipline — no surges. Build the aerobic engine.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'85% EFFORT', effortNote:'Full strength block. Moderate conditioning effort. Buffer day before Thursday.',
-      addon:'After session: 3 × 20 unbroken wall balls at race weight. Rest 60 sec between. Note if you broke sets.',
-      addonColor:'var(--phase-build)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'5×4 Intervals',
-      title:'5 × 4 min hard / 3 min recovery',
-      detail:'One rep added from Week 1. Same HR targets. The fifth interval will sting — that\'s the point.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'recovery',
-      sessionType:'Active Recovery',
-      title:'Mobility — hips, thoracic, ankles',
-      detail:'20–30 min easy movement. Foam roll.',
-      fields:['notes'] },
-    { id:'sat', label:'SAT', type:'sim',
-      sessionType:'CFM Sim (~60% race)',
-      title:'Sim session + post-break easy run',
-      detail:'Complete the CFM Saturday sim at race-day pacing discipline. After sport with your son, complete easy run.',
-      simNote:'Log every split you can, even if approximate. Identify your two weakest stations — this drives Wed add-on work going forward.',
-      runDetail:'Easy run: 35 min @ HR <135.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      runFields:['runDuration','runAvgHR','runNotes'],
-      hasSplits:true },
-  ]
-},
-{
-  id:'w3', num:'W3', phase:'build', phaseLabel:'BUILD PHASE',
-  dates:'18 May – 24 May', title:'Deload #1 — Absorb the Build',
-  note:'Volume drops ~30%. Intensity stays — when you work, work. This is where fitness from Weeks 1–2 consolidates. Do not skip this. Athletes who skip deloads arrive at peak weeks already depleted.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT', effortNote:'Complete all programmed work. Skip any optional extras or finishers.',
-      addon:'None this week — deload.',
-      addonColor:'var(--phase-build)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Easy Run',
-      title:'45 min @ HR <140',
-      detail:'Genuinely easy. Conversational pace. No HR creep. Recovery run only.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'70% EFFORT', effortNote:'Deload week. Full strength block at reduced load. Halve or skip conditioning.',
-      addon:'None — true deload day.',
-      addonColor:'var(--phase-build)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'4×4 Intervals',
-      title:'4 × 4 min hard / 3 min recovery',
-      detail:'Back to 4 reps. Same intensity, fewer reps. Keep quality sharp.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'rest', title:'Rest — full day off. Sleep.' },
-    { id:'sat', label:'SAT', type:'sim',
-      sessionType:'CFM Sim (~60% race)',
-      title:'Sim session + post-break easy run',
-      detail:'Deload week — complete the sim but target controlled effort rather than best time.',
-      simNote:'Log splits where possible. Finish feeling like you had more in the tank.',
-      runDetail:'Easy run: 25 min @ HR <130. Short and easy this week.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      runFields:['runDuration','runAvgHR','runNotes'],
-      hasSplits:false },
-  ]
-},
-{
-  id:'w4', num:'W4', phase:'intensity', phaseLabel:'INTENSITY PHASE',
-  dates:'25 May – 31 May', title:'Race Pace Specificity',
-  note:'Intensity phase begins. Tuesday run becomes a structured tempo. Thursday intervals push to 5×5. CFM sessions shift toward race-pace effort. Saturday sim should feel harder than previous weeks — that means you\'re fitter.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT — RACE PACE', effortNote:'Push conditioning at race-day effort. When running in session, target 5:30–6:00/km — practice running gassed off a station.',
-      addon:'After session: 2 × 30m heavy sled push at race weight. Note how legs feel.',
-      addonColor:'var(--phase-intensity)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Tempo Run',
-      title:'55 min — 10 easy / 30 tempo / 10 easy + 5 cool',
-      detail:'Tempo at race pace: 5:30–5:45/km, HR ~155–162. Uncomfortable but sustainable. Hold it through the back half.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'85% EFFORT', effortNote:'Full strength block. Moderate conditioning. Focus on technique at your two weakest stations from Week 2 sim.',
-      addon:'After session: target station work — 3 × your weakest station at race weight/distance. Log result.',
-      addonColor:'var(--phase-intensity)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'5×5 Intervals',
-      title:'5 × 5 min hard / 2.5 min recovery',
-      detail:'Longer reps, shorter rest. Brutally effective for Hyrox endurance. Pace slightly slower than 4-min reps — that\'s correct.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'recovery',
-      sessionType:'Active Recovery',
-      title:'Walk + foam roll + legs up the wall',
-      detail:'20–30 min. Legs up wall for 10 min. Protect Saturday.',
-      fields:['notes'] },
-    { id:'sat', label:'SAT', type:'sim',
-      sessionType:'CFM Sim (~60% race)',
-      title:'Sim session + post-break easy run',
-      detail:'Push slightly harder than Week 2. Compare splits to Week 2 — look for improvement at 2–3 stations.',
-      simNote:'Log splits where available. Compare trends to Week 2.',
-      runDetail:'Easy run: 40 min @ HR <135. Run is building now.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      runFields:['runDuration','runAvgHR','runNotes'],
-      hasSplits:true },
-  ]
-},
-{
-  id:'w5', num:'W5', phase:'intensity', phaseLabel:'INTENSITY PHASE',
-  dates:'1 Jun – 7 Jun', title:'Transition Running + Station Combos',
-  note:'The defining Hyrox skill is running hard off fatigued legs. This week adds transition run bricks where possible inside CFM sessions. Your body needs to learn to shift gears under duress.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT — TRANSITIONS', effortNote:'Where the session includes running, treat every run as a transition run — go immediately off the previous station without a standing rest.',
-      addon:'After session: 3 × [any station effort → immediate 200m run at target pace]. Practice the gear change.',
-      addonColor:'var(--phase-intensity)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Tempo Run',
-      title:'60 min — 10 easy / 35 tempo / 10 easy + 5 cool',
-      detail:'Tempo at 5:20–5:40/km. HR 155–163 during tempo block. Extended 5 min from Week 4.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'85% EFFORT', effortNote:'Full strength block. Moderate conditioning. This is the station skill day.',
-      addon:'After session: mini combo — ski erg 500m → 200m run → 30 wall balls → 200m run. Log total time.',
-      addonColor:'var(--phase-intensity)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'5×5 Intervals',
-      title:'5 × 5 min hard / 2 min recovery',
-      detail:'Rest reduced from Week 4 — more race-like incomplete recovery. Maintain pace despite shorter rest.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'recovery',
-      sessionType:'Active Recovery',
-      title:'Walk, stretch, sleep',
-      detail:'Protect Saturday. Full passive rest if body is asking for it.',
-      fields:['notes'] },
-    { id:'sat', label:'SAT', type:'sim',
-      sessionType:'CFM Sim (~60% race)',
-      title:'Sim session + post-break easy run',
-      detail:'Target a 2–3 min improvement on total sim time vs Week 4.',
-      simNote:'Log splits. Any station where you\'ve been doing add-on work should show improvement.',
-      runDetail:'Easy run: 45 min @ HR <135. Building toward 70 min at peak.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      runFields:['runDuration','runAvgHR','runNotes'],
-      hasSplits:true },
-  ]
-},
-{
-  id:'w6', num:'W6', phase:'intensity', phaseLabel:'INTENSITY PHASE',
-  dates:'8 Jun – 14 Jun', title:'Deload #2 — Protect the Peak',
-  note:'Volume drops ~25%. Peak weeks are 7 and 8 — you need to arrive at them fresh. A tired athlete going into peak weeks stagnates or gets injured. Trust the process.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'80% EFFORT', effortNote:'Deload week. Complete all programmed work. Skip any optional finishers. Condition at 80%.',
-      addon:'None — deload.',
-      addonColor:'var(--phase-intensity)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Easy Run',
-      title:'40 min @ HR <140',
-      detail:'Genuinely easy. Legs should feel light by the end. If they don\'t, you needed this deload more than you knew.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'70% EFFORT', effortNote:'Strength block only or at reduced load. Skip or halve conditioning. Active rest for Thursday.',
-      addon:'None — deload.',
-      addonColor:'var(--phase-intensity)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'4×4 Intervals',
-      title:'4 × 4 min hard / 3 min recovery',
-      detail:'Back to 4 reps. Sharp quality, lower volume. These should feel controlled — you\'re fresher.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'rest', title:'Rest — full day off.' },
-    { id:'sat', label:'SAT', type:'sim',
-      sessionType:'CFM Sim (~60% race)',
-      title:'Sim session + post-break easy run',
-      detail:'Controlled effort. Finish feeling like you had more. Quality over pushing.',
-      simNote:'Log splits where possible. This is a maintenance sim, not a best effort.',
-      runDetail:'Easy run: 30 min @ HR <130. Short and easy this week.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      runFields:['runDuration','runAvgHR','runNotes'],
-      hasSplits:false },
-  ]
-},
-{
-  id:'w7', num:'W7', phase:'peak', phaseLabel:'PEAK PHASE',
-  dates:'15 Jun – 21 Jun', title:'Maximum Race Specificity',
-  note:'Peak week 1. Highest quality of the plan. Every session is race-specific. Saturday sim should be your best yet — fresher from the deload, fitter from intensity phase. Push the sim harder than any previous week.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT — RACE SIMULATION', effortNote:'Every run in the session is a transition run. Push conditioning at race intensity. This is your hardest CFM week.',
-      addon:'After session: 2 × [sled push race weight 30m → immediate 200m run]. This is your key weakness drill.',
-      addonColor:'var(--phase-peak)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Race Pace Tempo',
-      title:'70 min — 10 easy / 45 tempo / 10 easy + 5 cool',
-      detail:'Longest run of the plan. Tempo at 5:20–5:35/km, HR 158–165. Hold pace through the back half — this is race-day mental training.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT — STATION QUALITY', effortNote:'Full strength block. Conditioning at race effort. Focus on performing stations at race weight — wall balls, farmers carry, sled.',
-      addon:'After session: wall balls 3 × 25 unbroken at race weight. Rest 90 sec between. Farmers carry 1 × 200m race weight. Log both.',
-      addonColor:'var(--phase-peak)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'6×3 Short Sharps',
-      title:'6 × 3 min max effort / 90 sec recovery',
-      detail:'Short, sharp, high power. Trains anaerobic ceiling — crucial for sled push and ski erg at race pace. Pace will be faster than 5-min reps.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'recovery',
-      sessionType:'Active Recovery',
-      title:'Walk only. Eat well. Sleep 8+ hours.',
-      detail:'Full nutrition day. Protect Saturday — this is your dress rehearsal sim.',
-      fields:['notes'] },
-    { id:'sat', label:'SAT', type:'sim',
-      sessionType:'CFM Sim (~60% race) — Best Effort',
-      title:'Best sim effort to date + post-break easy run',
-      detail:'Push for your best sim time. Race-day pacing, race-day intensity.',
-      simNote:'Log all available splits. Compare to every previous sim week. This is your clearest indicator of where you\'ll finish on race day.',
-      runDetail:'Easy run: 50 min @ HR <135. Longest post-sim run of the plan.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      runFields:['runDuration','runAvgHR','runNotes'],
-      hasSplits:true },
-  ]
-},
-{
-  id:'w8', num:'W8', phase:'peak', phaseLabel:'PEAK PHASE',
-  dates:'22 Jun – 28 Jun', title:'Final Peak + Taper Entry',
-  note:'Last hard week. Mon–Wed are full quality. Thursday is the last interval session. Volume starts dropping. No sim Saturday — replaced with a race-pace shakeout. You are done training to get fitter. Now you train to stay sharp while recovering.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'FULL EFFORT', effortNote:'Last heavy CFM week. Do not hold back Monday — final high volume day.',
-      addon:'After session: one final pass — your weakest station at race weight × 2 sets. Keep it brief.',
-      addonColor:'var(--phase-peak)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Tempo Run',
-      title:'55 min — 10 easy / 30 tempo / 10 easy + 5 cool',
-      detail:'Shorter than Week 7 — taper has begun. Maintain pace quality at 5:20–5:40/km, reduce duration.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Hyrox',
-      title:'Standard CFM programming',
-      intent:'85% EFFORT', effortNote:'Full strength block. Conditioning at moderate effort. Legs need to be available for Thursday.',
-      addon:'No add-on this week. Let the session stand.',
-      addonColor:'var(--phase-peak)',
-      fields:['avgHR','maxHR','duration','feel','notes'] },
-    { id:'thu', label:'THU', type:'intervals',
-      sessionType:'Final Intervals — 4×3',
-      title:'4 × 3 min hard / 2 min recovery',
-      detail:'Last VO2 stimulus. Short and sharp. Should feel fast and controlled. Last hard running session before race day.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-    { id:'fri', label:'FRI', type:'rest', title:'Rest — eat, hydrate, sleep.' },
-    { id:'sat', label:'SAT', type:'run',
-      sessionType:'Race-Pace Shakeout',
-      title:'No sim this week — running only',
-      detail:'20 min easy → 3 × 1km @ race pace (5:20–5:40/km) with 2 min walk recovery → 10 min easy. Stay sharp. Feel good and fast.',
-      fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
-  ]
-},
-{
-  id:'w9', num:'W9', phase:'taper', phaseLabel:'TAPER WEEK',
-  dates:'29 Jun – 5 Jul', title:'Arrive Fresh. Arrive Sharp.',
-  note:'Volume drops 50%+. Intensity stays in short bursts — a few sharp efforts to keep the neuromuscular system awake. Do not train hard. Everything you need is already in your body. Arrive at Sydney Showground rested, fuelled, and ready.',
-  days:[
-    { id:'sun', label:'SUN', type:'rest', title:'Rest — sleep in. Long walk if you want.' },
-    { id:'mon', label:'MON', type:'cfm',
-      sessionType:'CFM Light',
-      title:'Standard CFM programming',
-      intent:'60% EFFORT', effortNote:'Taper week. Attend and move. Strength at moderate load. Skip conditioning entirely or do 10 min very easy. Do not accumulate fatigue.',
-      addon:'None.',
-      addonColor:'var(--phase-taper)',
-      fields:['avgHR','duration','feel','notes'] },
-    { id:'tue', label:'TUE', type:'run',
-      sessionType:'Shakeout Run',
-      title:'25 min easy + 4 × 30 sec race-pace strides',
-      detail:'Feel light and fast. HR <135 except during strides. That\'s it.',
-      fields:['distance','duration','avgPace','avgHR','feel','notes'] },
-    { id:'wed', label:'WED', type:'cfm',
-      sessionType:'CFM Activation',
-      title:'Standard CFM programming',
-      intent:'40% EFFORT — ACTIVATION ONLY', effortNote:'Warm-up movements only. Touch each race station lightly — sled push empty/light, 2×10 wall balls, ski erg 200m easy. Feel the stations. Do not fatigue them.',
-      addon:'None.',
-      addonColor:'var(--phase-taper)',
-      fields:['feel','notes'] },
-    { id:'thu', label:'THU', type:'rest', title:'Rest — travel / prep. Pack kit. Check equipment.' },
-    { id:'fri', label:'FRI', type:'recovery',
-      sessionType:'Pre-Race Activation',
-      title:'15 min easy jog + 5 min dynamic warm-up only',
-      detail:'No stations. No effort. Eat carbohydrates tonight. Sleep early. Set two alarms.',
-      fields:['notes'] },
-    { id:'sat', label:'SAT', type:'race',
-      sessionType:'🏁 RACE DAY',
-      title:'HYROX SYDNEY — 5 JULY 2026',
-      detail:'Everything has been preparation for this. Target: Sub 90 minutes.',
-      fields:['simTime','avgHR','maxHR','feel','notes'],
-      hasSplits:true },
-  ]
-}
-];
-
-const FIELD_LABELS = {
+// ─── FIELD LABELS ─────────────────────────────────────────────────────────────
+const FL = {
   distance:'Distance (km)', duration:'Duration (min)', avgPace:'Avg Pace (/km)',
   avgHR:'Avg HR (bpm)', maxHR:'Max HR (bpm)', feel:'Feel (1–10)',
-  simTime:'Sim/Race Time', skiErg1km:'Ski Erg 1km', notes:'Notes',
-  runDuration:'Run Duration (min)', runAvgHR:'Run Avg HR', runNotes:'Run Notes'
+  simTime:'Sim/Race Time', notes:'Notes',
+  runDuration:'Run Duration (min)', runAvgHR:'Run Avg HR', runNotes:'Run Notes',
+  reps:'Reps'
 };
+
+// ─── WEEK DATA ────────────────────────────────────────────────────────────────
+const WEEKS = [
+  { id:'w1', num:'W1', phase:'build', phaseLabel:'BUILD PHASE', dates:'4 May – 10 May', title:'Restructure & Load Management',
+    note:'First week of corrected structure. Same output as last week, smarter distribution. One genuine recovery day between peak quality sessions. Tuesday HR dialled to 140–148. No finisher work Friday.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT', effortNote:'Complete all programmed work. Lower body strength focus this week.',
+        addon:'None this week — let the session stand on its own.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Threshold Run', title:'55 min @ controlled HR 140–148',
+        detail:'Hold pace steady from km 1. No surges. Target ~5:50–6:10/km.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'85% EFFORT', effortNote:'Buffer day. Full strength work. Dial conditioning back slightly — this protects Thursday.',
+        addon:'None — preserve energy for Thursday intervals.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'4×4 Intervals', title:'4 × 4 min hard / 3 min recovery',
+        detail:'Target HR 165–174 during work. Best pace ~4:00–4:20/km.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'recovery', sessionType:'Active Recovery', title:'20–30 min walk or light mobility only',
+        detail:'No structured training. This day exists to make Saturday count.',
+        fields:['notes'] },
+      { id:'sat', label:'SAT', type:'sim', sessionType:'CFM Sim (~60% race)', title:'Sim session + post-break easy run',
+        detail:'Complete the CFM Saturday sim at race-day pacing discipline. After sport with your son (≥1 hr break), complete easy run.',
+        simNote:'~60% of race distance. Stations vary week to week — log what you can. Trends matter more than absolutes.',
+        runDetail:'Easy run: 30 min @ HR <135.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], runFields:['runDuration','runAvgHR','runNotes'], hasSplits:true },
+    ]
+  },
+  { id:'w2', num:'W2', phase:'build', phaseLabel:'BUILD PHASE', dates:'11 May – 17 May', title:'Station Specificity + Run Volume Up',
+    note:'Same structure as Week 1. Tuesday run extends to 65 min. Intervals go to 5×4. Begin logging Saturday sim splits — even approximate ones. Wall balls, sled push, farmers carry are highest time-risk stations.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT', effortNote:'Complete all programmed work. Focus on ski erg technique — efficiency over speed.',
+        addon:'Log your ski erg 1km split if it comes up. This is your baseline.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Threshold Run', title:'65 min @ HR 140–150',
+        detail:'Extended from Week 1. Same pace discipline — no surges.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'85% EFFORT', effortNote:'Full strength block. Moderate conditioning. Buffer day before Thursday.',
+        addon:'After session: 3 × 20 unbroken wall balls at race weight. Rest 60 sec between. Note if you broke sets.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'5×4 Intervals', title:'5 × 4 min hard / 3 min recovery',
+        detail:'One rep added from Week 1. Same HR targets. The fifth interval will sting.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'recovery', sessionType:'Active Recovery', title:'Mobility — hips, thoracic, ankles',
+        detail:'20–30 min easy movement. Foam roll.',
+        fields:['notes'] },
+      { id:'sat', label:'SAT', type:'sim', sessionType:'CFM Sim (~60% race)', title:'Sim session + post-break easy run',
+        detail:'Log every split you can. Identify two weakest stations — this drives Wed add-on work going forward.',
+        simNote:'Log all available splits even if approximate. Identify your two weakest stations.',
+        runDetail:'Easy run: 35 min @ HR <135.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], runFields:['runDuration','runAvgHR','runNotes'], hasSplits:true },
+    ]
+  },
+  { id:'w3', num:'W3', phase:'build', phaseLabel:'BUILD PHASE', dates:'18 May – 24 May', title:'Deload #1 — Absorb the Build',
+    note:'Volume drops ~30%. Intensity stays. This is where fitness from Weeks 1–2 consolidates. Do not skip this.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT', effortNote:'Complete all programmed work. Skip any optional extras or finishers.',
+        addon:'None this week — deload.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Easy Run', title:'45 min @ HR <140',
+        detail:'Genuinely easy. Conversational pace. No HR creep. Recovery run only.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'70% EFFORT', effortNote:'Deload week. Full strength block at reduced load. Halve or skip conditioning.',
+        addon:'None — true deload day.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'4×4 Intervals', title:'4 × 4 min hard / 3 min recovery',
+        detail:'Back to 4 reps. Same intensity, fewer reps. Keep quality sharp.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'rest', title:'Rest — full day off. Sleep.' },
+      { id:'sat', label:'SAT', type:'sim', sessionType:'CFM Sim (~60% race)', title:'Sim session + post-break easy run',
+        detail:'Deload week — controlled effort, not best time. Finish feeling you had more.',
+        simNote:'Log splits where possible. Controlled effort this week.',
+        runDetail:'Easy run: 25 min @ HR <130.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], runFields:['runDuration','runAvgHR','runNotes'], hasSplits:false },
+    ]
+  },
+  { id:'w4', num:'W4', phase:'intensity', phaseLabel:'INTENSITY PHASE', dates:'25 May – 31 May', title:'Race Pace Specificity',
+    note:'Intensity phase begins. Tuesday becomes a structured tempo. Thursday goes to 5×5. CFM shifts toward race-pace effort.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT — RACE PACE', effortNote:'Push conditioning at race-day effort. When running in session, target 5:30–6:00/km off a station.',
+        addon:'After session: 2 × 30m heavy sled push at race weight. Note how legs feel.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Tempo Run', title:'55 min — 10 easy / 30 tempo / 10 easy + 5 cool',
+        detail:'Tempo at race pace: 5:30–5:45/km, HR ~155–162. Hold it through the back half.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'85% EFFORT', effortNote:'Full strength block. Moderate conditioning. Focus on two weakest stations from Week 2 sim.',
+        addon:'After session: 3 × your weakest station at race weight/distance. Log result.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'5×5 Intervals', title:'5 × 5 min hard / 2.5 min recovery',
+        detail:'Longer reps, shorter rest. Brutally effective for Hyrox endurance.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'recovery', sessionType:'Active Recovery', title:'Walk + foam roll + legs up the wall',
+        detail:'20–30 min. Legs up wall for 10 min.',
+        fields:['notes'] },
+      { id:'sat', label:'SAT', type:'sim', sessionType:'CFM Sim (~60% race)', title:'Sim session + post-break easy run',
+        detail:'Push slightly harder than Week 2. Compare splits — look for improvement at 2–3 stations.',
+        simNote:'Log splits. Compare trends to Week 2.',
+        runDetail:'Easy run: 40 min @ HR <135.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], runFields:['runDuration','runAvgHR','runNotes'], hasSplits:true },
+    ]
+  },
+  { id:'w5', num:'W5', phase:'intensity', phaseLabel:'INTENSITY PHASE', dates:'1 Jun – 7 Jun', title:'Transition Running + Station Combos',
+    note:'The defining Hyrox skill is running hard off fatigued legs. This week adds transition run bricks inside CFM sessions. Your body needs to learn to shift gears under duress.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT — TRANSITIONS', effortNote:'Every run in session is a transition run — go immediately off the previous station without a standing rest.',
+        addon:'After session: 3 × [any station effort → immediate 200m run at target pace]. Practice the gear change.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Tempo Run', title:'60 min — 10 easy / 35 tempo / 10 easy + 5 cool',
+        detail:'Tempo at 5:20–5:40/km. HR 155–163 during tempo. Extended 5 min from Week 4.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'85% EFFORT', effortNote:'Full strength block. Moderate conditioning. Station skill day.',
+        addon:'After session: ski erg 500m → 200m run → 30 wall balls → 200m run. Log total time.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'5×5 Intervals', title:'5 × 5 min hard / 2 min recovery',
+        detail:'Rest reduced from Week 4. More race-like incomplete recovery.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'recovery', sessionType:'Active Recovery', title:'Walk, stretch, sleep',
+        detail:'Protect Saturday.',
+        fields:['notes'] },
+      { id:'sat', label:'SAT', type:'sim', sessionType:'CFM Sim (~60% race)', title:'Sim session + post-break easy run',
+        detail:'Target 2–3 min improvement on sim time vs Week 4.',
+        simNote:'Log splits. Any station where you\'ve done add-on work should show improvement.',
+        runDetail:'Easy run: 45 min @ HR <135.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], runFields:['runDuration','runAvgHR','runNotes'], hasSplits:true },
+    ]
+  },
+  { id:'w6', num:'W6', phase:'intensity', phaseLabel:'INTENSITY PHASE', dates:'8 Jun – 14 Jun', title:'Deload #2 — Protect the Peak',
+    note:'Volume drops ~25%. Peak weeks are 7 and 8 — you need to arrive fresh. Trust the process.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'80% EFFORT', effortNote:'Deload week. Complete all programmed work. Skip any finishers. Condition at 80%.',
+        addon:'None — deload.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Easy Run', title:'40 min @ HR <140',
+        detail:'Genuinely easy. Legs should feel light by the end.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'70% EFFORT', effortNote:'Strength block only or reduced load. Skip or halve conditioning.',
+        addon:'None — deload.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'4×4 Intervals', title:'4 × 4 min hard / 3 min recovery',
+        detail:'Back to 4 reps. Sharp quality, lower volume. Should feel controlled.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'rest', title:'Rest — full day off.' },
+      { id:'sat', label:'SAT', type:'sim', sessionType:'CFM Sim (~60% race)', title:'Sim session + post-break easy run',
+        detail:'Controlled effort. Finish feeling like you had more.',
+        simNote:'Maintenance sim. Log splits where possible.',
+        runDetail:'Easy run: 30 min @ HR <130.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], runFields:['runDuration','runAvgHR','runNotes'], hasSplits:false },
+    ]
+  },
+  { id:'w7', num:'W7', phase:'peak', phaseLabel:'PEAK PHASE', dates:'15 Jun – 21 Jun', title:'Maximum Race Specificity',
+    note:'Peak week 1. Highest quality of the plan. Saturday sim should be your best yet. Push harder than any previous week.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT — RACE SIMULATION', effortNote:'Every run in session is a transition run. Push conditioning at race intensity. Hardest CFM week.',
+        addon:'After session: 2 × [sled push race weight 30m → immediate 200m run]. Key weakness drill.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Race Pace Tempo', title:'70 min — 10 easy / 45 tempo / 10 easy + 5 cool',
+        detail:'Longest run of the plan. Tempo at 5:20–5:35/km, HR 158–165. Hold pace through the back half.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT — STATION QUALITY', effortNote:'Full strength block at race effort. Perform stations at race weight — wall balls, farmers carry, sled.',
+        addon:'After session: wall balls 3 × 25 unbroken at race weight (90 sec rest). Farmers carry 1 × 200m race weight. Log both.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'6×3 Short Sharps', title:'6 × 3 min max effort / 90 sec recovery',
+        detail:'Short, sharp, high power. Trains anaerobic ceiling — crucial for sled push and ski erg at race pace.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'recovery', sessionType:'Active Recovery', title:'Walk only. Eat well. Sleep 8+ hours.',
+        detail:'Full nutrition day. Protect Saturday — dress rehearsal.',
+        fields:['notes'] },
+      { id:'sat', label:'SAT', type:'sim', sessionType:'CFM Sim (~60% race) — Best Effort', title:'Best sim effort to date + post-break easy run',
+        detail:'Push for your best sim time. Race-day pacing, race-day intensity.',
+        simNote:'Log all available splits. Compare to every previous sim week. Clearest indicator of race day outcome.',
+        runDetail:'Easy run: 50 min @ HR <135. Longest post-sim run of the plan.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], runFields:['runDuration','runAvgHR','runNotes'], hasSplits:true },
+    ]
+  },
+  { id:'w8', num:'W8', phase:'peak', phaseLabel:'PEAK PHASE', dates:'22 Jun – 28 Jun', title:'Final Peak + Taper Entry',
+    note:'Last hard week. Mon–Wed full quality. Thursday is the last interval session. Volume drops. No sim Saturday.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — full recovery' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'FULL EFFORT', effortNote:'Last heavy CFM week. Do not hold back — final high volume day.',
+        addon:'After session: one final pass at your weakest station at race weight × 2 sets.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Tempo Run', title:'55 min — 10 easy / 30 tempo / 10 easy + 5 cool',
+        detail:'Shorter than Week 7 — taper has begun. Maintain pace quality at 5:20–5:40/km.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Hyrox', title:'Standard CFM programming',
+        intent:'85% EFFORT', effortNote:'Full strength block. Conditioning at moderate effort. Legs need to be available for Thursday.',
+        addon:'No add-on this week.',
+        fields:['avgHR','maxHR','duration','feel','notes'] },
+      { id:'thu', label:'THU', type:'intervals', sessionType:'Final Intervals — 4×3', title:'4 × 3 min hard / 2 min recovery',
+        detail:'Last VO2 stimulus. Short and sharp. Last hard running session before race day.',
+        fields:['reps','distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+      { id:'fri', label:'FRI', type:'rest', title:'Rest — eat, hydrate, sleep.' },
+      { id:'sat', label:'SAT', type:'run', sessionType:'Race-Pace Shakeout', title:'No sim — running only',
+        detail:'20 min easy → 3 × 1km @ race pace (5:20–5:40/km) with 2 min walk recovery → 10 min easy.',
+        fields:['distance','duration','avgPace','avgHR','maxHR','feel','notes'] },
+    ]
+  },
+  { id:'w9', num:'W9', phase:'taper', phaseLabel:'TAPER WEEK', dates:'29 Jun – 5 Jul', title:'Arrive Fresh. Arrive Sharp.',
+    note:'Volume drops 50%+. Everything you need is already in your body. Arrive at Sydney Showground rested, fuelled, and ready.',
+    days:[
+      { id:'sun', label:'SUN', type:'rest', title:'Rest — sleep in.' },
+      { id:'mon', label:'MON', type:'cfm', sessionType:'CFM Light', title:'Standard CFM programming',
+        intent:'60% EFFORT', effortNote:'Taper week. Attend and move. Strength at moderate load. Skip conditioning.',
+        addon:'None.',
+        fields:['avgHR','duration','feel','notes'] },
+      { id:'tue', label:'TUE', type:'run', sessionType:'Shakeout Run', title:'25 min easy + 4 × 30 sec race-pace strides',
+        detail:'Feel light and fast. HR <135 except during strides.',
+        fields:['distance','duration','avgPace','avgHR','feel','notes'] },
+      { id:'wed', label:'WED', type:'cfm', sessionType:'CFM Activation', title:'Standard CFM programming',
+        intent:'40% EFFORT — ACTIVATION ONLY', effortNote:'Touch each station lightly. Sled push empty/light, 2×10 wall balls, ski erg 200m easy. Feel the stations — don\'t fatigue them.',
+        addon:'None.',
+        fields:['feel','notes'] },
+      { id:'thu', label:'THU', type:'rest', title:'Rest — travel / prep. Pack kit.' },
+      { id:'fri', label:'FRI', type:'recovery', sessionType:'Pre-Race Activation', title:'15 min easy jog + 5 min dynamic warm-up only',
+        detail:'No stations. No effort. Eat carbs tonight. Sleep early. Set two alarms.',
+        fields:['notes'] },
+      { id:'sat', label:'SAT', type:'race', sessionType:'🏁 RACE DAY', title:'HYROX SYDNEY — 5 JULY 2026',
+        detail:'Everything has been preparation for this. Target: Sub 90 minutes.',
+        fields:['simTime','avgHR','maxHR','feel','notes'], hasSplits:true },
+    ]
+  }
+];
 
 // ─── STORAGE ──────────────────────────────────────────────────────────────────
 const store = {
-  get(k) { try { return JSON.parse(localStorage.getItem('hyrox2_'+k)||'null'); } catch(e){return null;} },
-  set(k,v) { try { localStorage.setItem('hyrox2_'+k, JSON.stringify(v)); } catch(e){} },
-  del(k) { try { localStorage.removeItem('hyrox2_'+k); } catch(e){} }
+  get(k) { try { return JSON.parse(localStorage.getItem('hyrox3_'+k)||'null'); } catch(e){return null;} },
+  set(k,v) { try { localStorage.setItem('hyrox3_'+k, JSON.stringify(v)); } catch(e){} },
+  del(k) { try { localStorage.removeItem('hyrox3_'+k); } catch(e){} }
 };
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
@@ -683,29 +462,62 @@ let openWeeks = new Set();
 let openPanels = new Set();
 let currentFilter = 'all';
 
+// ─── GOOGLE SHEETS SYNC ───────────────────────────────────────────────────────
+function setSyncStatus(state, msg) {
+  const dot = document.getElementById('sync-dot');
+  const label = document.getElementById('sync-label');
+  dot.className = 'sync-dot ' + state;
+  label.textContent = msg;
+}
+
+async function syncToSheets(weekId, dayId, data, sessionType) {
+  setSyncStatus('syncing', 'Syncing to Google Sheets...');
+  try {
+    const week = WEEKS.find(w=>w.id===weekId);
+    const payload = {
+      ...data,
+      type: sessionType,
+      week: weekId.toUpperCase(),
+      day: dayId.toUpperCase(),
+      date: new Date().toLocaleDateString('en-AU')
+    };
+
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    // Mark as synced in local storage
+    const stored = store.get(weekId+'_'+dayId) || {};
+    stored._synced = true;
+    stored._syncTime = new Date().toISOString();
+    store.set(weekId+'_'+dayId, stored);
+
+    setSyncStatus('ok', 'Synced to Google Sheets — ' + new Date().toLocaleTimeString('en-AU'));
+    return true;
+  } catch(err) {
+    setSyncStatus('error', 'Sheets sync failed — data saved locally');
+    return false;
+  }
+}
+
 // ─── RENDER ───────────────────────────────────────────────────────────────────
 function render() {
   const container = document.getElementById('main-content');
   container.innerHTML = '';
-  let totalSessions = 0, doneSessions = 0;
+  let total = 0, done = 0;
 
   WEEKS.forEach(week => {
     if (currentFilter !== 'all' && week.phase !== currentFilter) return;
-
-    let weekDone = 0, weekTotal = 0;
-    week.days.forEach(d => {
-      if (d.type === 'rest') return;
-      weekTotal++;
-      if (store.get(week.id+'_'+d.id)) weekDone++;
-    });
-    totalSessions += weekTotal;
-    doneSessions += weekDone;
+    let wDone = 0, wTotal = 0;
+    week.days.forEach(d => { if(d.type==='rest') return; wTotal++; if(store.get(week.id+'_'+d.id)) wDone++; });
+    total += wTotal; done += wDone;
 
     const card = document.createElement('div');
-    card.className = 'week-card' + (openWeeks.has(week.id) ? ' open' : '');
-    card.id = 'wcard_'+week.id;
-
-    const headerHTML = `
+    card.className = 'week-card' + (openWeeks.has(week.id)?' open':'');
+    card.innerHTML = `
       <div class="week-header" onclick="toggleWeek('${week.id}')">
         <div class="phase-stripe" style="background:${PC[week.phase]}"></div>
         <div class="week-num">${week.num}</div>
@@ -714,208 +526,106 @@ function render() {
           <div class="week-dates">${week.dates}</div>
           <div class="week-title">${week.title}</div>
         </div>
-        <div class="week-completion"><b>${weekDone}/${weekTotal}</b>done</div>
+        <div class="week-completion"><b>${wDone}/${wTotal}</b>done</div>
         <div class="chevron">▾</div>
-      </div>`;
-
-    const bodyHTML = `
+      </div>
       <div class="week-body">
         <div class="coach-note">${week.note}</div>
-        ${week.days.map(day => renderDay(week, day)).join('')}
+        ${week.days.map(d=>renderDay(week,d)).join('')}
       </div>`;
-
-    card.innerHTML = headerHTML + bodyHTML;
     container.appendChild(card);
   });
 
-  if (currentFilter === 'all' || currentFilter === 'taper') {
-    container.appendChild(renderRaceCard());
-  }
-
-  updateProgress(doneSessions, totalSessions);
+  if (currentFilter==='all'||currentFilter==='taper') container.appendChild(renderRaceCard());
+  updateProgress(done, total);
 }
 
 function renderDay(week, day) {
-  if (day.type === 'rest') {
-    return `<div class="day-row no-action">
-      <div class="day-label">${day.label}</div>
-      <div class="day-content"><div class="rest-label">${day.title}</div></div>
-    </div>`;
-  }
+  if (day.type==='rest') return `<div class="day-row no-action"><div class="day-label">${day.label}</div><div class="day-content"><div class="rest-label">${day.title}</div></div></div>`;
 
   const logged = store.get(week.id+'_'+day.id);
   const panelOpen = openPanels.has(week.id+'_'+day.id);
-  const phaseColor = day.type === 'race' ? 'var(--yellow)' : day.type === 'recovery' ? 'var(--phase-taper)' : PC[week.phase];
+  const phaseColor = day.type==='race'?'var(--yellow)':day.type==='recovery'?'var(--phase-taper)':PC[week.phase];
 
-  // CFM intent badge
-  let intentHTML = '';
-  if (day.intent) {
-    intentHTML = `<div class="intent-badge" style="border-color:${PC[week.phase]}40;color:${PC[week.phase]}">${day.intent}</div>
-    <div style="font-size:11.5px;color:var(--soft);margin-top:4px;line-height:1.5">${day.effortNote}</div>`;
-  }
+  const showAddon = day.addon && !['None this week — let the session stand on its own.','None — preserve energy for Thursday intervals.','None this week — deload.','None — true deload day.','None — deload.','None.','No add-on this week.'].includes(day.addon);
 
-  // Add-on box
-  let addonHTML = '';
-  if (day.addon && day.addon !== 'None.' && day.addon !== 'None this week — deload.' && day.addon !== 'None — deload.' && day.addon !== 'None — true deload day.' && day.addon !== 'None — preserve energy for Thursday intervals.' && day.addon !== 'No add-on this week. Let the session stand.') {
-    addonHTML = `<div class="addon-box" style="border-left-color:${day.addonColor}">
-      <strong>Post-session add-on</strong>${day.addon}
-    </div>`;
-  }
-
-  // Sim-specific extra info
-  let simHTML = '';
-  if (day.type === 'sim' || day.type === 'race') {
-    if (day.simNote) simHTML += `<div style="font-size:11.5px;color:var(--muted);font-style:italic;margin-top:5px;line-height:1.5">📋 ${day.simNote}</div>`;
-    if (day.runDetail) simHTML += `<div style="font-size:11.5px;color:var(--soft);margin-top:4px;line-height:1.5">🏃 ${day.runDetail}</div>`;
-  }
-
-  // Logged data display
-  let loggedHTML = '';
-  if (logged) {
-    const stats = Object.entries(logged)
-      .filter(([k,v]) => k !== 'notes' && k !== 'splits' && k !== 'runNotes' && v)
-      .map(([k,v]) => `<div class="logged-stat">
-        <div class="logged-stat-label">${FIELD_LABELS[k]||k}</div>
-        <div class="logged-stat-value">${v}</div>
-      </div>`).join('');
-
-    let splitsHTML = '';
-    if (logged.splits && logged.splits.some(s=>s)) {
-      splitsHTML = `<div class="logged-splits">
-        <div class="logged-splits-label">Station Splits</div>
-        <div class="logged-splits-grid">
-          ${STATIONS.map((s,i) => logged.splits[i] ? `<div class="logged-split">
-            <div class="logged-split-station">${s}</div>
-            <div class="logged-split-time">${logged.splits[i]}</div>
-          </div>` : '').join('')}
-        </div>
-      </div>`;
-    }
-
-    const notesStr = [logged.notes, logged.runNotes].filter(Boolean).join(' | ');
-
-    loggedHTML = `<div class="logged-data visible">
-      <div class="logged-data-grid">${stats}</div>
-      ${splitsHTML}
-      ${notesStr ? `<div class="logged-notes">${notesStr}</div>` : ''}
-      <button class="btn-edit-log" onclick="togglePanel('${week.id}','${day.id}')">Edit log ›</button>
-    </div>`;
-  }
-
-  const panelHTML = panelOpen ? renderLogPanel(week, day, logged) : '';
+  const loggedHTML = logged ? `<div class="logged-data visible">
+    <div class="logged-data-grid">${Object.entries(logged).filter(([k,v])=>!['notes','splits','runNotes','_synced','_syncTime'].includes(k)&&v).map(([k,v])=>`<div><div class="logged-stat-label">${FL[k]||k}</div><div class="logged-stat-value">${v}</div></div>`).join('')}</div>
+    ${logged.splits&&logged.splits.some(s=>s)?`<div class="logged-splits"><div class="logged-splits-label">Station Splits</div><div class="logged-splits-grid">${STATIONS.map((s,i)=>logged.splits[i]?`<div class="logged-split"><div class="logged-split-station">${s}</div><div class="logged-split-time">${logged.splits[i]}</div></div>`:'').join('')}</div></div>`:''}
+    ${[logged.notes,logged.runNotes].filter(Boolean).length?`<div class="logged-notes">${[logged.notes,logged.runNotes].filter(Boolean).join(' | ')}</div>`:''}
+    ${logged._synced?`<div class="logged-synced">✓ Synced to Google Sheets ${logged._syncTime?new Date(logged._syncTime).toLocaleString('en-AU'):''}</div>`:`<div class="logged-sync-fail">⚠ Saved locally — not yet synced to Sheets</div>`}
+    <button class="btn-edit-log" onclick="togglePanel('${week.id}','${day.id}')">Edit log ›</button>
+  </div>` : '';
 
   return `
     <div class="day-row">
       <div class="day-label">${day.label}</div>
       <div class="day-content">
         <div class="session-type" style="color:${phaseColor}">${day.sessionType||''}</div>
-        <div class="session-detail">
-          <strong>${day.title}</strong>
-          ${day.detail ? `<br>${day.detail}` : ''}
-        </div>
-        ${intentHTML}
-        ${addonHTML}
-        ${simHTML}
+        <div class="session-detail"><strong>${day.title}</strong>${day.detail?'<br>'+day.detail:''}</div>
+        ${day.intent?`<div class="intent-badge" style="color:${PC[week.phase]};border-color:${PC[week.phase]}40;background:${PC[week.phase]}10">${day.intent}</div><div style="font-size:11.5px;color:var(--soft);margin-top:4px;line-height:1.5">${day.effortNote}</div>`:''}
+        ${showAddon?`<div class="addon-box" style="border-left-color:${PC[week.phase]}"><strong>Post-session add-on</strong>${day.addon}</div>`:''}
+        ${day.simNote?`<div style="font-size:11.5px;color:var(--muted);font-style:italic;margin-top:5px;line-height:1.5">📋 ${day.simNote}</div>`:''}
+        ${day.runDetail?`<div style="font-size:11.5px;color:var(--soft);margin-top:4px;line-height:1.5">🏃 ${day.runDetail}</div>`:''}
         ${loggedHTML}
       </div>
       <div class="day-actions">
-        <button class="btn-log ${logged?'logged':''}" onclick="togglePanel('${week.id}','${day.id}')">
-          ${logged ? '✓ Logged' : '+ Log'}
-        </button>
+        <button class="btn-log ${logged?'logged':''}" onclick="togglePanel('${week.id}','${day.id}')">${logged?'✓ Logged':'+ Log'}</button>
+        ${logged&&!logged._synced?`<button class="btn-log" style="font-size:9px;padding:3px 6px" onclick="retrySyncSession('${week.id}','${day.id}')">↑ Sync</button>`:''}
       </div>
     </div>
-    ${panelHTML ? `<div class="log-panel visible">${panelHTML}</div>` : ''}
-  `;
+    ${panelOpen?`<div class="log-panel visible">${renderLogPanel(week,day,logged)}</div>`:''}`;
 }
 
 function renderLogPanel(week, day, existing) {
   const e = existing || {};
-  const isSim = day.hasSplits;
-  const hasRunFields = day.runFields && day.runFields.length;
+  const mainFields = (day.fields||[]).filter(f=>f!=='notes');
 
-  const mainFields = (day.fields||[]).filter(f => f !== 'notes');
   const fieldsHTML = mainFields.map(f => {
-    if (f === 'feel') return `<div class="log-field">
-      <label>${FIELD_LABELS[f]}</label>
-      <select id="f_${week.id}_${day.id}_feel">
-        <option value="">—</option>
-        ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<option ${e.feel==n?'selected':''} value="${n}">${n}</option>`).join('')}
-      </select></div>`;
-    return `<div class="log-field">
-      <label>${FIELD_LABELS[f]||f}</label>
-      <input type="text" id="f_${week.id}_${day.id}_${f}" placeholder="—" value="${e[f]||''}">
-    </div>`;
+    if (f==='feel') return `<div class="log-field"><label>${FL[f]}</label><select id="f_${week.id}_${day.id}_feel"><option value="">—</option>${[1,2,3,4,5,6,7,8,9,10].map(n=>`<option ${e.feel==n?'selected':''} value="${n}">${n}</option>`).join('')}</select></div>`;
+    return `<div class="log-field"><label>${FL[f]||f}</label><input type="text" id="f_${week.id}_${day.id}_${f}" placeholder="—" value="${e[f]||''}"></div>`;
   }).join('');
 
-  const runFieldsHTML = hasRunFields ? `
-    <div style="grid-column:1/-1;margin-top:6px;padding-top:8px;border-top:1px solid var(--border)">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--yellow);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Post-Break Easy Run</div>
-      <div class="log-grid" style="margin-bottom:0">
-        ${(day.runFields||[]).filter(f=>f!=='runNotes').map(f=>`<div class="log-field">
-          <label>${FIELD_LABELS[f]||f}</label>
-          <input type="text" id="f_${week.id}_${day.id}_${f}" placeholder="—" value="${e[f]||''}">
-        </div>`).join('')}
-      </div>
-      ${(day.runFields||[]).includes('runNotes') ? `<div class="log-field" style="margin-top:6px">
-        <label>Run Notes</label>
-        <textarea id="f_${week.id}_${day.id}_runNotes" placeholder="How did the run feel after the break?">${e.runNotes||''}</textarea>
-      </div>` : ''}
-    </div>` : '';
+  const splitsHTML = day.hasSplits ? `<div class="splits-section" style="grid-column:1/-1">
+    <label>Station Splits (optional)</label>
+    <div class="splits-note">Log what's available — distances may vary week to week. Trends matter more than absolutes.</div>
+    <div class="splits-grid">${STATIONS.map((s,i)=>`<div class="split-field"><label>${s}</label><input type="text" id="split_${week.id}_${day.id}_${i}" placeholder="mm:ss" value="${(e.splits||[])[i]||''}"></div>`).join('')}</div>
+  </div>` : '';
 
-  const splitsHTML = isSim ? `
-    <div class="splits-section" style="grid-column:1/-1">
-      <label>Station Splits (optional — log what you have)</label>
-      <div class="splits-note">Distances may vary week to week — that's fine. Log what's available. Trends matter more than absolutes.</div>
-      <div class="splits-grid">
-        ${STATIONS.map((s,i) => `<div class="split-field">
-          <label>${s}</label>
-          <input type="text" id="split_${week.id}_${day.id}_${i}" placeholder="mm:ss or —" value="${(e.splits||[])[i]||''}">
-        </div>`).join('')}
-      </div>
-    </div>` : '';
+  const runFieldsHTML = day.runFields ? `<div style="grid-column:1/-1;margin-top:8px;padding-top:10px;border-top:1px solid var(--border)">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--yellow);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Post-Break Easy Run</div>
+    <div class="log-grid" style="margin-bottom:0">${(day.runFields).filter(f=>f!=='runNotes').map(f=>`<div class="log-field"><label>${FL[f]||f}</label><input type="text" id="f_${week.id}_${day.id}_${f}" placeholder="—" value="${e[f]||''}"></div>`).join('')}</div>
+    ${day.runFields.includes('runNotes')?`<div class="log-field" style="margin-top:6px"><label>Run Notes</label><textarea id="f_${week.id}_${day.id}_runNotes" placeholder="How did the run feel after the break?">${e.runNotes||''}</textarea></div>`:''}
+  </div>` : '';
 
-  const notesHTML = (day.fields||[]).includes('notes') ? `
-    <div class="log-field wide">
-      <label>Notes</label>
-      <textarea id="f_${week.id}_${day.id}_notes" placeholder="How did it feel? What went well? What to work on?">${e.notes||''}</textarea>
-    </div>` : '';
+  const notesHTML = (day.fields||[]).includes('notes') ? `<div class="log-field wide"><label>Notes</label><textarea id="f_${week.id}_${day.id}_notes" placeholder="How did it feel? What went well? What to work on?">${e.notes||''}</textarea></div>` : '';
 
-  return `
-    <h4>Log Session — ${week.num} ${day.label} — ${day.sessionType||day.title}</h4>
-    <div class="log-grid">
-      ${fieldsHTML}
-      ${splitsHTML}
-      ${notesHTML}
-    </div>
+  return `<h4>Log — ${week.num} ${day.label} — ${day.sessionType||day.title}</h4>
+    <div class="log-grid">${fieldsHTML}${splitsHTML}${notesHTML}</div>
     ${runFieldsHTML}
-    <div class="log-actions" style="margin-top:10px">
-      <button class="btn-save" onclick="saveLog('${week.id}','${day.id}')">Save</button>
+    <div class="log-actions">
+      <button class="btn-save" id="savebtn_${week.id}_${day.id}" onclick="saveLog('${week.id}','${day.id}','${day.type}')">Save + Sync</button>
       <button class="btn-cancel" onclick="closePanel('${week.id}','${day.id}')">Cancel</button>
-      ${existing ? `<button class="btn-cancel btn-delete" onclick="deleteLog('${week.id}','${day.id}')">Delete</button>` : ''}
-      <span class="save-msg" id="msg_${week.id}_${day.id}">✓ Saved</span>
-    </div>
-  `;
+      ${existing?`<button class="btn-cancel btn-delete" onclick="deleteLog('${week.id}','${day.id}')">Delete</button>`:''}
+      <span class="save-status" id="savestatus_${week.id}_${day.id}"></span>
+    </div>`;
 }
 
 function renderRaceCard() {
   const div = document.createElement('div');
   div.className = 'race-card';
-  div.innerHTML = `
-    <div class="race-card-header">
-      <div class="race-card-title">RACE DAY STRATEGY</div>
-      <div class="race-card-sub">HYROX SYDNEY — 5 JULY 2026 — TARGET: SUB 90 MIN</div>
-    </div>
+  div.innerHTML = `<div class="race-card-header"><div class="race-card-title">RACE DAY STRATEGY</div><div class="race-card-sub">HYROX SYDNEY — 5 JULY 2026 — TARGET: SUB 90 MIN</div></div>
     <div class="race-body">
       <div class="stats-bar">
         <div class="stat-box"><div class="stat-box-label">Run splits ×8</div><div class="stat-box-value">5:45</div><div class="stat-box-sub">per km target</div></div>
         <div class="stat-box"><div class="stat-box-label">Station budget</div><div class="stat-box-value">~44m</div><div class="stat-box-sub">total 8 stations</div></div>
-        <div class="stat-box"><div class="stat-box-label">Running total</div><div class="stat-box-value">~46m</div><div class="stat-box-sub">8 × 1km @ 5:45</div></div>
+        <div class="stat-box"><div class="stat-box-label">Running total</div><div class="stat-box-value">~46m</div><div class="stat-box-sub">8×1km @ 5:45</div></div>
         <div class="stat-box"><div class="stat-box-label">Target</div><div class="stat-box-value">&lt;90m</div><div class="stat-box-sub">incl. transitions</div></div>
       </div>
       <div class="strategy-rules">
         <strong style="color:var(--yellow);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Race Day Rules</strong>
         Start conservative on runs 1–2 — you'll feel amazing and want to fly. Don't.<br>
-        Wall balls is your biggest time wildcard — break into sets of 20–25 with short rests rather than grinding to failure.<br>
+        Wall balls is your biggest time wildcard — break into sets of 20–25 with short rests.<br>
         Sled push is pure grit — breathe before you push, not during.<br>
         Farmers carry — pick a point 50m ahead and don't put it down until you reach it.<br>
         Never stop moving on the runs — a slow jog beats a walk every single time.
@@ -932,80 +642,97 @@ function updateProgress(done, total) {
 
 // ─── INTERACTIONS ─────────────────────────────────────────────────────────────
 function toggleWeek(id) {
-  if (openWeeks.has(id)) openWeeks.delete(id);
-  else openWeeks.add(id);
+  if(openWeeks.has(id)) openWeeks.delete(id); else openWeeks.add(id);
   render();
 }
 
 function togglePanel(weekId, dayId) {
   const key = weekId+'_'+dayId;
-  if (openPanels.has(key)) { openPanels.delete(key); }
+  if(openPanels.has(key)) openPanels.delete(key);
   else { openWeeks.add(weekId); openPanels.add(key); }
   render();
-  setTimeout(() => {
-    const panels = document.querySelectorAll('.log-panel.visible');
-    if (panels.length) panels[panels.length-1].scrollIntoView({behavior:'smooth', block:'nearest'});
-  }, 60);
+  setTimeout(()=>{ const els=document.querySelectorAll('.log-panel.visible'); if(els.length) els[els.length-1].scrollIntoView({behavior:'smooth',block:'nearest'}); },60);
 }
 
-function closePanel(weekId, dayId) {
-  openPanels.delete(weekId+'_'+dayId);
-  render();
-}
+function closePanel(weekId, dayId) { openPanels.delete(weekId+'_'+dayId); render(); }
 
-function saveLog(weekId, dayId) {
+async function saveLog(weekId, dayId, sessionType) {
+  const btn = document.getElementById(`savebtn_${weekId}_${dayId}`);
+  const status = document.getElementById(`savestatus_${weekId}_${dayId}`);
+  if(btn) { btn.disabled=true; btn.textContent='Saving...'; }
+
   const week = WEEKS.find(w=>w.id===weekId);
   const day = week.days.find(d=>d.id===dayId);
   const data = {};
 
-  const allFields = [...(day.fields||[]), ...(day.runFields||[])];
+  const allFields = [...(day.fields||[]),...(day.runFields||[])];
   allFields.forEach(f => {
     const el = document.getElementById(`f_${weekId}_${dayId}_${f}`);
-    if (el && el.value.trim()) data[f] = el.value.trim();
+    if(el&&el.value.trim()) data[f]=el.value.trim();
   });
 
-  if (day.hasSplits) {
-    const splits = STATIONS.map((_,i) => {
-      const el = document.getElementById(`split_${weekId}_${dayId}_${i}`);
-      return el ? el.value.trim() : '';
-    });
-    if (splits.some(s=>s)) data.splits = splits;
+  if(day.hasSplits) {
+    const splits = STATIONS.map((_,i)=>{ const el=document.getElementById(`split_${weekId}_${dayId}_${i}`); return el?el.value.trim():''; });
+    if(splits.some(s=>s)) data.splits=splits;
   }
 
+  // Save locally first
   store.set(weekId+'_'+dayId, data);
   openPanels.delete(weekId+'_'+dayId);
+
+  // Sync to Sheets
+  const synced = await syncToSheets(weekId, dayId, data, sessionType);
+  if(synced) {
+    const stored = store.get(weekId+'_'+dayId)||{};
+    stored._synced=true; stored._syncTime=new Date().toISOString();
+    store.set(weekId+'_'+dayId, stored);
+  }
+
   render();
 }
 
+async function retrySyncSession(weekId, dayId) {
+  const data = store.get(weekId+'_'+dayId);
+  if(!data) return;
+  const week = WEEKS.find(w=>w.id===weekId);
+  const day = week.days.find(d=>d.id===dayId);
+  const synced = await syncToSheets(weekId, dayId, data, day.type);
+  if(synced) {
+    const stored = store.get(weekId+'_'+dayId)||{};
+    stored._synced=true; stored._syncTime=new Date().toISOString();
+    store.set(weekId+'_'+dayId, stored);
+    render();
+  }
+}
+
 function deleteLog(weekId, dayId) {
-  if (!confirm('Delete this log entry?')) return;
+  if(!confirm('Delete this log entry?')) return;
   store.del(weekId+'_'+dayId);
   openPanels.delete(weekId+'_'+dayId);
   render();
 }
 
 function filterPhase(phase, btn) {
-  currentFilter = phase;
-  document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+  currentFilter=phase;
+  document.querySelectorAll('.phase-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   render();
 }
 
-// ─── INIT — open current week ─────────────────────────────────────────────────
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 const today = new Date();
-const weekRanges = [
+const ranges = [
   ['2026-05-04','2026-05-10','w1'],['2026-05-11','2026-05-17','w2'],
   ['2026-05-18','2026-05-24','w3'],['2026-05-25','2026-05-31','w4'],
   ['2026-06-01','2026-06-07','w5'],['2026-06-08','2026-06-14','w6'],
   ['2026-06-15','2026-06-21','w7'],['2026-06-22','2026-06-28','w8'],
   ['2026-06-29','2026-07-05','w9'],
 ];
-let matched = false;
-for (const [s,e,id] of weekRanges) {
-  if (today >= new Date(s) && today <= new Date(e)) { openWeeks.add(id); matched = true; break; }
+let matched=false;
+for(const [s,e,id] of ranges) {
+  if(today>=new Date(s)&&today<=new Date(e)){openWeeks.add(id);matched=true;break;}
 }
-if (!matched) openWeeks.add('w1');
-
+if(!matched) openWeeks.add('w1');
 render();
 </script>
 </body>
